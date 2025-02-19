@@ -11,7 +11,7 @@ const prizes = [
   "Kitchen Machine-Moulinex-1000W","Vacuum Cleaner-Hoover- 2000w","Smart Watch -Redmi","Air fryer -Torneedo-3.5 lit","Smart Watch -Huawei","Turkish Coffee Machine -Mienta","Toaster -Sonai","Iron-Philips","Speaker - JBL","Laptop -Del Core i7", "TV LG -43", "Mobile -Samsung Galaxy A55", "Mobile -Vivo Y19s Black", "Microwave -Fresh-28lit", "Vacuum Cleaner-Hoover- 2000w", 
   "Smart Watch -Redmi", "Air fryer -Torneedo-3.5 lit", "Turkish Coffee Machine -Mienta", "Toaster -Sonai", 
   "Sandwich maker -One Life-waffel, grill-1*3/800w", "Iron-Philips", "Mobile -Vivo Y19s Black",
-  "Smart Watch -Apple", "Samsung Galaxy TABA9/Ram:4GB/M:64GB", "Microwave -Sharp-34lit", "TV Sharp 32", "Microwave -Fresh-28lit", "Vacuum Cleaner-Hoover- 2000w", "Vacuum Cleaner -Fresh-1900 w", "Air fryer -Torneedo-3.5 lit", "Smart Watch -Huawei", "Turkish Coffee Machine -Mienta", "Sandwich maker -One Life-waffel, grill-1*3/800w",
+  "Smart Watch -Apple", "Samsung Galaxy TABA9", "Microwave -Sharp-34lit", "TV Sharp 32", "Microwave -Fresh-28lit", "Vacuum Cleaner-Hoover- 2000w", "Vacuum Cleaner -Fresh-1900 w", "Air fryer -Torneedo-3.5 lit", "Smart Watch -Huawei", "Turkish Coffee Machine -Mienta", "Sandwich maker -One Life-waffel, grill-1*3/800w",
   "Iron-Philips", "Vacuum Cleaner -Fresh-1900 w",
 
 ];
@@ -213,7 +213,7 @@ export default function DrawSimulator() {
         `}
       </style>
 
-      <h1 className="title">Crown Plaza Champions League</h1>
+      <h1 className="title">Crowne Plaza Champions League</h1>
       <div className={`draw-sections ${isSwitchingColors ? "switching" : ""}`}>
         {/* Name Draw Section */}
         <div className="draw-section name">
