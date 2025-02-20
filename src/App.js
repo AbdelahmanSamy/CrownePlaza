@@ -62,7 +62,7 @@ export default function DrawSimulator() {
         setTimeout(() => {
           setDrawnName("Who's next");
           setDrawnPrize("Mmmmm 🤔");
-        }, 6000); // Show "Who's next" after 3 seconds
+        }, 10000); // Show "Who's next" after 3 seconds
       }, 1000); // Wait 3 seconds before drawing the prize
     }, 1000); // Wait 1 second before starting the draw
   };
