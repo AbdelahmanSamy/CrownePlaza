@@ -15,9 +15,10 @@ const prizes = [
   "Iron-Philips", "Vacuum Cleaner -Fresh-1900 w",
 
 ];
+
 export default function DrawSimulator() {
-  const [remainingNames, setRemainingNames] = useState([]);
-  const [remainingPrizes, setRemainingPrizes] = useState([]);
+  const [remainingNames, setRemainingNames] = useState(names);
+  const [remainingPrizes, setRemainingPrizes] = useState(prizes);
   const [drawnName, setDrawnName] = useState(null);
   const [drawnPrize, setDrawnPrize] = useState(null);
   const [isSwitchingColors, setIsSwitchingColors] = useState(false);
@@ -31,11 +32,11 @@ export default function DrawSimulator() {
       const shuffledItems = [...items].sort(() => 0.5 - Math.random()).slice(0, 4);
       setDrawn(shuffledItems[Math.floor(Math.random() * shuffledItems.length)]);
       shuffleCount++;
-      if (shuffleCount > 5) { // After 5 shuffles (2 seconds each), stop the shuffle
+      if (shuffleCount > 10) { // After 10 shuffles (1 second each), stop the shuffle
         clearInterval(shuffleInterval);
         callback();
       }
-    }, 1500); // 2 seconds interval for each name
+    }, 100); // Shorter interval for faster shuffle
   };
 
   const drawRandom = (items, setItems, setDrawn) => {
@@ -58,21 +59,32 @@ export default function DrawSimulator() {
       setTimeout(() => {
         drawRandom(remainingPrizes, setRemainingPrizes, setDrawnPrize);
         setIsSwitchingColors(false);
-      }, 3000); // Wait 4 seconds before drawing the prize
+      }, 3000); // Wait 3 seconds before drawing the prize
     }, 1000); // Wait 1 second before starting the draw
   };
 
   useEffect(() => {
-    window.addEventListener("keydown", (event) => {
-      if (event.key === " " && remainingPrizes.length > 0) {
+    if (remainingPrizes.length === 0) {
+      setTimeout(() => {
+        alert('🎉 Congrats for all the winners 🎉');
+      }, 500); // Delay the alert until the last prize is drawn
+    }
+  }, [remainingPrizes]);
+
+  // Add space bar functionality
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === " " || event.key === "Spacebar") {
         handleDraw();
       }
-    });
+    };
+
+    document.addEventListener("keydown", handleKeyPress);
+
     return () => {
-      window.removeEventListener("keydown", handleDraw);
+      document.removeEventListener("keydown", handleKeyPress);
     };
   }, [remainingNames, remainingPrizes]);
-
 
   return (
     <div className="draw-simulator">
@@ -195,89 +207,48 @@ export default function DrawSimulator() {
           }
 
           .reset-button {
-            background-color: #4b5563;
+            background-color: silver;
             color: white;
-            padding: 1rem 3rem;
+            padding: 1rem 2rem;
             border: none;
             border-radius: 8px;
             font-size: 1.25rem;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-top: 2rem;
           }
 
           .reset-button:hover {
-            background-color: #374151;
-          }
-
-          @media (max-width: 768px) {
-            .draw-sections {
-              flex-direction: column;
-              gap: 1.5rem;
-            }
-
-            .draw-section {
-              width: 100%;
-            }
-
-            .title {
-              font-size: 1.75rem;
-            }
-
-            .draw-button {
-              width: 100%;
-            }
-
-            .reset-button {
-              width: 100%;
-            }
+            background-color: #e13f3f;
           }
         `}
       </style>
-
-      <h1 className="title">Crowne Plaza Champions League</h1>
-      <div className={`draw-sections ${isSwitchingColors ? "switching" : ""}`}>
-        <div className="draw-section name">
-          <h2 className="section-title">Names</h2>
-          <div className="draw-circle name-circle">
-            {drawnName || "?"}
+      <div className="title">Crowne Plaza Champions League</div>
+      <div className="draw-sections">
+        <div className="draw-section">
+          <div className={`draw-circle name-circle ${isSwitchingColors ? 'switching' : ''}`}>
+            {drawnName ? drawnName : "Draw Name"}
           </div>
+          <div className="section-title">Name</div>
         </div>
-
-        <div className="draw-section prize">
-          <h2 className="section-title">Prizes</h2>
-          <div className="draw-circle prize-circle">
-            {drawnPrize || "?"}
+        <div className="draw-section">
+          <div className={`draw-circle prize-circle ${isSwitchingColors ? 'switching' : ''}`}>
+            {drawnPrize ? drawnPrize : "Draw Prize"}
           </div>
+          <div className="section-title">Prize</div>
         </div>
       </div>
-
+      <button className="draw-button" onClick={handleDraw}>Start Draw</button>
       <button
-        onClick={handleDraw}
-        className="draw-button"
-        disabled={isShuffling}
-      >
-        Draw
-      </button>
-
-      <button
+        className="reset-button"
         onClick={() => {
-          setRemainingNames([...names]);
-          setRemainingPrizes([...prizes]);
+          setRemainingNames(names);
+          setRemainingPrizes(prizes);
           setDrawnName(null);
           setDrawnPrize(null);
         }}
-        className="reset-button"
-        disabled={isShuffling}
       >
-        Reset Draw
+        Reset
       </button>
-
-      {remainingPrizes.length === 0 && (
-        <h2 style={{ color: "red", fontSize: "1.5rem", marginTop: "1rem" }}>
-          🎉 Congrats for all the winners 🎉
-        </h2>
-      )}
     </div>
   );
 }
