@@ -58,6 +58,11 @@ export default function DrawSimulator() {
       setTimeout(() => {
         drawRandom(remainingPrizes, setRemainingPrizes, setDrawnPrize);
         setIsSwitchingColors(false);
+        // After 3 seconds, show "Who's next"
+        setTimeout(() => {
+          setDrawnName("Who's next");
+          setDrawnPrize("Mmmmm 🤔");
+        }, 3000); // Show "Who's next" after 3 seconds
       }, 3000); // Wait 3 seconds before drawing the prize
     }, 1000); // Wait 1 second before starting the draw
   };
@@ -237,7 +242,6 @@ export default function DrawSimulator() {
         </div>
       </div>
       <button className="draw-button" onClick={handleDraw}>Start Draw</button>
-      
     </div>
   );
 }
