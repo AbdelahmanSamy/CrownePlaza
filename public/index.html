@@ -25,31 +25,29 @@
       }
 
       /* Hide the SoundCloud iframe */
-      .soundcloud-embed {
-        display: none;
-      }
-
-      /* Make the new SoundCloud iframe also hidden */
       .hidden-soundcloud {
         display: none;
       }
 
-      .credits {
-        font-size: 10px;
-        color: #cccccc;
-        line-break: anywhere;
-        word-break: normal;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        font-family: Interstate, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Garuda, Verdana, Tahoma, sans-serif;
-        font-weight: 100;
-        text-align: center;
+      /* Button style */
+      .music-button {
+        position: fixed;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: #ff5500;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        z-index: 10;
       }
 
-      .credits a {
-        color: #cccccc;
-        text-decoration: none;
+      /* Button hover effect */
+      .music-button:hover {
+        background-color: #ff7733;
       }
     </style>
   </head>
@@ -59,28 +57,30 @@
 
     <div id="root"></div>
 
-    <!-- Embed SoundCloud Player, hidden but autoplaying -->
+    <!-- Embed SoundCloud Player, hidden initially -->
     <iframe 
-  class="hidden-soundcloud"
-  width="100%" 
-  height="300" 
-  scrolling="no" 
-  frameborder="no" 
-  allow="autoplay" 
-  src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1971221216&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
-</iframe>
-
-
-    <!-- New Embed for the playlist, also hidden -->
-    <iframe 
+      id="soundcloud-player"
       class="hidden-soundcloud"
       width="100%" 
       height="300" 
       scrolling="no" 
       frameborder="no" 
       allow="autoplay" 
-      src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1971221216&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+      src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1971221216&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
     </iframe>
-    
+
+    <!-- Button to play music -->
+    <button class="music-button" onclick="playMusic()">Play Music</button>
+
+    <script>
+      // Function to play the music when the button is clicked
+      function playMusic() {
+        const soundcloudIframe = document.getElementById('soundcloud-player');
+        // Trigger autoplay without showing the iframe
+        const iframeSrc = soundcloudIframe.src;
+        soundcloudIframe.src = ''; // Reset the iframe
+        soundcloudIframe.src = iframeSrc; // Set the src again to trigger autoplay
+      }
+    </script>
   </body>
 </html>

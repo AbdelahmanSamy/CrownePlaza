@@ -11,46 +11,68 @@ const prizes = [
   "Kitchen Machine-Moulinex-1000W","Vacuum Cleaner-Hoover- 2000w","Smart Watch -Redmi","Air fryer -Torneedo-3.5 lit","Smart Watch -Huawei","Turkish Coffee Machine -Mienta","Toaster -Sonai","Iron-Philips","Speaker - JBL","Laptop -Del Core i7", "TV LG -43", "Mobile -Samsung Galaxy A55", "Mobile -Vivo Y19s Black", "Microwave -Fresh-28lit", "Vacuum Cleaner-Hoover- 2000w", 
   "Smart Watch -Redmi", "Air fryer -Torneedo-3.5 lit", "Turkish Coffee Machine -Mienta", "Toaster -Sonai", 
   "Sandwich maker -One Life-waffel, grill-1*3/800w", "Iron-Philips", "Mobile -Vivo Y19s Black",
-  "Smart Watch -Apple", "Samsung Galaxy TABA9/Ram:4GB/M:64GB", "Microwave -Sharp-34lit", "TV Sharp 32", "Microwave -Fresh-28lit", "Vacuum Cleaner-Hoover- 2000w", "Vacuum Cleaner -Fresh-1900 w", "Air fryer -Torneedo-3.5 lit", "Smart Watch -Huawei", "Turkish Coffee Machine -Mienta", "Sandwich maker -One Life-waffel, grill-1*3/800w",
+  "Smart Watch -Apple", "Samsung Galaxy TABA9", "Microwave -Sharp-34lit", "TV Sharp 32", "Microwave -Fresh-28lit", "Vacuum Cleaner-Hoover- 2000w", "Vacuum Cleaner -Fresh-1900 w", "Air fryer -Torneedo-3.5 lit", "Smart Watch -Huawei", "Turkish Coffee Machine -Mienta", "Sandwich maker -One Life-waffel, grill-1*3/800w",
   "Iron-Philips", "Vacuum Cleaner -Fresh-1900 w",
 
 ];
 export default function DrawSimulator() {
-  const [remainingNames, setRemainingNames] = useState([...names]);
-  const [remainingPrizes, setRemainingPrizes] = useState([...prizes]);
+  const [remainingNames, setRemainingNames] = useState([]);
+  const [remainingPrizes, setRemainingPrizes] = useState([]);
   const [drawnName, setDrawnName] = useState(null);
   const [drawnPrize, setDrawnPrize] = useState(null);
   const [isSwitchingColors, setIsSwitchingColors] = useState(false);
+  const [isShuffling, setIsShuffling] = useState(false);
+
+  const shuffleEffect = (items, setDrawn, callback) => {
+    let shuffleCount = 0;
+    setIsShuffling(true);
+
+    const shuffleInterval = setInterval(() => {
+      const shuffledItems = [...items].sort(() => 0.5 - Math.random()).slice(0, 4);
+      setDrawn(shuffledItems[Math.floor(Math.random() * shuffledItems.length)]);
+      shuffleCount++;
+      if (shuffleCount > 5) { // After 5 shuffles (2 seconds each), stop the shuffle
+        clearInterval(shuffleInterval);
+        callback();
+      }
+    }, 1500); // 2 seconds interval for each name
+  };
 
   const drawRandom = (items, setItems, setDrawn) => {
-    if (items.length === 0) return; // Stop drawing if no items left
-    const randomIndex = Math.floor(Math.random() * items.length);
-    const drawnItem = items[randomIndex];
-    setDrawn(drawnItem);
-    setItems(prevItems => prevItems.filter((_, index) => index !== randomIndex)); // Remove drawn item
+    if (items.length === 0) return;
+    shuffleEffect(items, setDrawn, () => {
+      const randomIndex = Math.floor(Math.random() * items.length);
+      const drawnItem = items[randomIndex];
+      setDrawn(drawnItem);
+      setItems(prevItems => prevItems.filter((_, index) => index !== randomIndex));
+    });
   };
 
-  const handleKeydown = (event) => {
-    if (event.key === " " && remainingPrizes.length > 0) {
-      setIsSwitchingColors(true);
+  const handleDraw = () => {
+    if (remainingNames.length === 0 || remainingPrizes.length === 0) return;
 
-      // Set a timeout to trigger the color switching animation for a moment
+    setIsSwitchingColors(true);
+
+    setTimeout(() => {
+      drawRandom(remainingNames, setRemainingNames, setDrawnName);
       setTimeout(() => {
-        drawRandom(remainingNames, setRemainingNames, setDrawnName);
         drawRandom(remainingPrizes, setRemainingPrizes, setDrawnPrize);
-        setIsSwitchingColors(false); // End the animation
-      }, 1000); // You can adjust this duration
-    }
+        setIsSwitchingColors(false);
+      }, 3000); // Wait 4 seconds before drawing the prize
+    }, 1000); // Wait 1 second before starting the draw
   };
 
-  // Attach event listener to detect spacebar press
   useEffect(() => {
-    window.addEventListener("keydown", handleKeydown);
-
+    window.addEventListener("keydown", (event) => {
+      if (event.key === " " && remainingPrizes.length > 0) {
+        handleDraw();
+      }
+    });
     return () => {
-      window.removeEventListener("keydown", handleKeydown);
+      window.removeEventListener("keydown", handleDraw);
     };
   }, [remainingNames, remainingPrizes]);
+
 
   return (
     <div className="draw-simulator">
@@ -90,7 +112,7 @@ export default function DrawSimulator() {
 
           .draw-sections {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             gap: 3rem;
             margin-bottom: 2.5rem;
           }
@@ -157,7 +179,7 @@ export default function DrawSimulator() {
           }
 
           .draw-button {
-            background-color: #2563eb;
+            background-color: #c9a52c;
             color: white;
             padding: 1rem 2rem;
             border: none;
@@ -213,36 +235,30 @@ export default function DrawSimulator() {
         `}
       </style>
 
-      <h1 className="title">Crown Plaza Champions League</h1>
+      <h1 className="title">Crowne Plaza Champions League</h1>
       <div className={`draw-sections ${isSwitchingColors ? "switching" : ""}`}>
-        {/* Name Draw Section */}
         <div className="draw-section name">
           <h2 className="section-title">Names</h2>
           <div className="draw-circle name-circle">
             {drawnName || "?"}
           </div>
-          <button
-            onClick={() => drawRandom(remainingNames, setRemainingNames, setDrawnName)}
-            className="draw-button"
-          >
-            Draw Name
-          </button>
         </div>
 
-        {/* Prize Draw Section */}
         <div className="draw-section prize">
           <h2 className="section-title">Prizes</h2>
           <div className="draw-circle prize-circle">
             {drawnPrize || "?"}
           </div>
-          <button
-            onClick={() => drawRandom(remainingPrizes, setRemainingPrizes, setDrawnPrize)}
-            className="draw-button"
-          >
-            Draw Prize
-          </button>
         </div>
       </div>
+
+      <button
+        onClick={handleDraw}
+        className="draw-button"
+        disabled={isShuffling}
+      >
+        Draw
+      </button>
 
       <button
         onClick={() => {
@@ -252,6 +268,7 @@ export default function DrawSimulator() {
           setDrawnPrize(null);
         }}
         className="reset-button"
+        disabled={isShuffling}
       >
         Reset Draw
       </button>
