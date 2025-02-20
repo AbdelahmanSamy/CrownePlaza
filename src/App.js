@@ -6,8 +6,7 @@ const names = [
 const prizes = [
   "Mobile -Apple 15",
   "Speaker - JBL",
-  "Apple AirPods (3rd Generation), Wireless",
-  "TV Sharp 32",
+  "Apple AirPods (3rd Generation), Wireless", "TV Sharp 32",
   "Kitchen Machine-Moulinex-1000W","Vacuum Cleaner-Hoover- 2000w","Smart Watch -Redmi","Air fryer -Torneedo-3.5 lit","Smart Watch -Huawei","Turkish Coffee Machine -Mienta","Toaster -Sonai","Iron-Philips","Speaker - JBL","Laptop -Del Core i7", "TV LG -43", "Mobile -Samsung Galaxy A55", "Mobile -Vivo Y19s Black", "Microwave -Fresh-28lit", "Vacuum Cleaner-Hoover- 2000w", 
   "Smart Watch -Redmi", "Air fryer -Torneedo-3.5 lit", "Turkish Coffee Machine -Mienta", "Toaster -Sonai", 
   "Sandwich maker -One Life-waffel, grill-1*3/800w", "Iron-Philips", "Mobile -Vivo Y19s Black",
@@ -32,11 +31,11 @@ export default function DrawSimulator() {
       const shuffledItems = [...items].sort(() => 0.5 - Math.random()).slice(0, 4);
       setDrawn(shuffledItems[Math.floor(Math.random() * shuffledItems.length)]);
       shuffleCount++;
-      if (shuffleCount > 10) { // After 10 shuffles (1 second each), stop the shuffle
+      if (shuffleCount > 15) { // After 10 shuffles (1 second each), stop the shuffle
         clearInterval(shuffleInterval);
         callback();
       }
-    }, 100); // Shorter interval for faster shuffle
+    }, 70); // Shorter interval for faster shuffle
   };
 
   const drawRandom = (items, setItems, setDrawn) => {
@@ -222,33 +221,23 @@ export default function DrawSimulator() {
           }
         `}
       </style>
-      <div className="title">Crowne Plaza Champions League</div>
+      <div className="title">Crowne Plaza Lucky draw</div>
       <div className="draw-sections">
         <div className="draw-section">
           <div className={`draw-circle name-circle ${isSwitchingColors ? 'switching' : ''}`}>
             {drawnName ? drawnName : "Draw Name"}
           </div>
-          <div className="section-title">Name</div>
+          
         </div>
         <div className="draw-section">
           <div className={`draw-circle prize-circle ${isSwitchingColors ? 'switching' : ''}`}>
             {drawnPrize ? drawnPrize : "Draw Prize"}
           </div>
-          <div className="section-title">Prize</div>
+          
         </div>
       </div>
       <button className="draw-button" onClick={handleDraw}>Start Draw</button>
-      <button
-        className="reset-button"
-        onClick={() => {
-          setRemainingNames(names);
-          setRemainingPrizes(prizes);
-          setDrawnName(null);
-          setDrawnPrize(null);
-        }}
-      >
-        Reset
-      </button>
+      
     </div>
   );
 }
