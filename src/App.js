@@ -2,34 +2,24 @@ import { useState, useEffect } from "react";
 import {Howl} from 'howler';
 
 const names = [
-  "Hisham Nabil Hussein Abdel Hamid", "Nassar Othman Nassar Mousa", "Shady Samir Moustafa Mohamed", "Ahmed Ashraf Salah El Din Hafez El Segainy", "Hend Diaa Diaa Saif El Din Khalifa", "Wagih Khalifa Abdel Aal Ahmed",  
-"Souad Mohamed Mohamed Abdel Salam Mohamed Metwally", "Hany Abdallah Mahmoud Hussein", "Essam Moustafa Saad El Din Abdel Rahman Afifi", "Engy Nabil Mahmoud Fahmy Mohamed", "Essam Mahmoud Zafar Abdel Rahim Zafar", "Hassan Yousef Hassan Saleh",  
-"Hatem Ahmed Basyouny Omar", "Reem Ibrahim Abdel Rahman Mohamed Daif", "Shaimaa Ahmed Reyad Amin", "Sayed Mohamed Sayed Ahmed Mohamed", "Ashraf Hassanain Taha Salem", "Ehab Ramadan Abdel Khalek Shoeb",  
-"Ahmed Mohamed El Saeed Abdel Fattah Ghonaim El Mahallawy", "Mohamed Mahmoud Ramadan Ahmed El Wakeel", "Mahmoud Hassan Ahmed Mohamed", "Abdel Rahman Mohamed Khalifa Hassanain Khamis", "Milad Eshak Shehata Assad", "Mohamed Abdel Gawwad Abdel Salam Abdel Gawwad",  
-"Amr Mohamed Mahmoud Afifi", "Mahmoud Gamil El Shahat Shehata", "Omnia Adel Mohamed Abdel Maguid", "Ahmed Medhat Fadel Abdallah Fadl", "Sherif El Sayed Mahmoud El Sayed El Shahed", "Hassan Mohamed Hassan Abou Shamar",  
-"El Sayed Ibrahim Mohamed Ibrahim Nashy", "Abdel Rahman Omar Salah El Din Daif", "Girgis Farag Selwans Atallah", "Ahmed Helmy Kourany Kotb", "Mohamed Khaled Ali Mousa Allam", "Ahmed Saad Abdel Aziz Mohamed Zidan",  
-"Hossam Sharaf Hamed Moustafa", "Karam Essam Mohamed El Sayed", "Ahmed El Sayed Abdel Razek Soliman", "Ibrahim Ragab Younes El Sayed", "Yasser Mohamed Fouad El Sayed Ali Arab", "Ahmed Ibrahim Mohamed Ibrahim",  
-"Ramy Reda Khalil Mohamed Ibrahim", "Hussein Hosny Sayed Afifi", "Engy Abdel Maseeh Aziz Zaky", "Mohamed Ashraf Farhan Mohamed", "Ali Reda Ali Mohamed Abdel Aziz", "Sabry Saad Mohamed Abdel Momen",  
-"Mohamed Reda Abdel Salam Abdel Rahman", "Saleh Madbouly Mahmoud Rezk Shaker", "Sayed Rabee Sayed Mohamed", "Ahmed Adel Ahmed Hemaida", "Anwar Salah Ali Shehata Batteekh", "Mohamed Abdallah Metwally Ibrahim",  
-"Yasmine Abdel Tawab Abdallah Mohamed Badawy", "Moustafa Mahmoud Mohamed Abdel Maksoud", "Mohamed Hamed Ahmed Mohamed", "Mohamed Saeed Shaban Mohamed Ibrahim", "Morsy Sayed Morsy Sadek", "Zeyad Emad Eid Abdel Wahed Gamil",  
-"Hossam Hassan Mohamed Hassan", "Waleed Khaled Ali Ibrahim", "Ahmed Moustafa Abdel Rahim Gad", "Ali Gamal Ismaeel Mohamed Moustafa", "Emil Athanasious Emil Meleek", "Samy El Sayed Ali Ismail",  
-"Ehab Saad Mohamed Zaghloul Nasr", "Abdel Hady Mokhtar Abdel Salam Moawad", "Amr Abdel Rahman Yakoub Ayesh", "Wael Mohamed Sayed Mohamed", "Moustafa Mohamed Yousef Bekheet", "Mohamed El Sayyad Abdel Moniem Hamad El Kilany",  
-"Islam Ibrahim Mortada Hassan", "Ahmed Gamal Fouad Abdel Samad", "Emad Abdallah Hussein Ahmed", "George Onsy Philips", "Moustafa Abdel Naby Abdel Azim Hassan", "Ahmed Abdallah Mohamed Moustafa El Garbooa",  
-"Abdel Khalek Ali Abdel Khalek Saad", "Mohamed Magdy Hosny Fathy", "Mohamed Nasser Gamaa Mahmoud", "Sayed Salah Sayed Ahmed", "Belal Omara Mohamed Hemaida", "Ahmed Zain El Abdeen Ali Abdallah",  
-"Maged Abdel Halim Mohamed Awwad", "Mahmoud Hassan Ibrahim Yousef", "Hossam Alaa Hanafy Ahmed", "Belal Azzam Sedik Hassan", "Kareem Abdel Baset Ali Taee", "Mohamed Saeed Mohamed Ali",  
-"Mohamed Ali Abdel Rady Omar", "Moustafa Shahat Mohamed Saad", "Adham Sayed Aboul Azm Abdel Hamid", "Hagar Mahfouz Ali Gouda", "Ramadan Tarek Ramadan Abbas", "Ragab Owais Eid Abdel Wahab",  
-"Mohamed Hassan Mohamed Gad El Rab", "Hany Essa Awad Mekhaeel", "Wael Ramadan Ahmed Hemdan", "Mohamed Salem Ali El Esawy", "Ahmed Mahmoud Abbas Bekheet", "Hazem Hamdy Mohamed Morsy",  
-"Hamed Ali Hamed Ali El Sayed", "Farag Sayed Abdallah Abou Seree", "Mohamed Ramadan Hassan Ali Abdel Maguid", "Abdallah Mohamed Farahat Yousef Abdallah", "Mahmoud Ahmed Mahmoud Mohamed", "Ahmed Nasser Abdel Aziz Abdel Naby",  
-"Mahmoud Saeed Mahmoud Ahmed", "Mohamed Ibrahim Mahmoud Ismaeel Amer", "Waleed Mahmoud Mohamed Abou Bakr", "Hamada Saeed Metwally Abou Bakr", "Maha Mohamed Mahrous Hassan", "Ahmed Eid Mohamed Moustafa Khalil",  
-"Aya Bekheet Abdel Sayed Bekheet", "Khaled Saeed Kamal Fouad Mohamed El Mahallawy", "Joseph Magdy Shafik El Sayed", "Osama Mamdouh Saber Abdel Moteleb", "Ibrahim Ahmed Ibrahim Hareedy", "Reem Ahmed Kamal Ahmed Abdel Aal Selim",  
-"Alaa Samy Abdel Maogoud Ali Hamad", "Moustafa Abdel Halim Ahmed Abdel Wahab", "Mohamed Shamandy Abdel Kader Shamandy", "Ahmed Tarek Mohamed Ahmed", "Hatem Mohamed Ragab Mohamed", "Ahmed Fathy Ibrahim Ahmed",  
-"Moataz Moustafa Salem Ali Ali", "Moustafa Fathy Ali Mohamed", "Mina Fayek Shaker Farag", "Ahmed Essam Abdel Maksoud Qayaty", "Eman Sayed Abdel Wahab Ali", "Magdy Fayez Awad Ramadan Naeem",  
-"Ahmed Antar Mohamed Antar El Hawwary", "Eriny Niazy Sobhy Tadros", "Abdel Hamid Gamal Abdel Hamid Abdel Azim Mahmoud", "Mohamed Eid Abdel Wahed Ibrahim", "Ahmed Essam Mohamed Abdel Fattah Ibrahim", "Naeem Hamada Naeem Mohamed El Ahdal",  
-"Mahmoud Fawzy Zaky Hafez", "Ashraf El Kady Abdel Aal Ali", "Gamal Abdel Fattah Mohamed Mohamed Salem", "Saad Moustafa Sultan Ahmed", "Mahmoud Ahmed Mourad Abdallah", "Mohamed Atef El Sayed Kotb El Zaydy",  
-"Hossam Salama El Sayed Mohamed Abdel Maksoud", "Islam Mohamed Farouk Mohamed Mohamed", "Ashraf Farouk Sayed Ali", "Alyaa Saber Ibrahim Ibrahim", "Ashraf Salah Abdel Kader Mohamed", "Mohamed Mohamed Abdel Tawab Emam",  
-"Mohamed Amr Kamal Ali Hammam", "Mohamed Kamal Kamal Salem Shalaby", "Abdel Rahman Ashraf Ahmed Mahran", "Atef Eid Mahmoud Hamad", "Islam Mohamed Saeed Abdel Aziz Darwish", "Fady Maged Michaeel Aziz",  
-"Bishoy Milad Kamel Awadallah Farag", "Sally Abdel Aal Mohamed Reyad", "Shams Ibrahim Hamed Hussein", "Eman Salah Abdel Hay Sowailam", "Radwan Gamal Radwan Ahmed", "Momen Magdy Ahmed Gomaa",  
-"Taha Basem Taha El Kady", "Ahmed Madbouly Ibrahim Madbouly"  
+  "Wagih Khalifa Abdel Aal Ahmed", "Souad Mohamed Mohamed Abdel Salam Mohamed Metwally", "Hany Abdallah Mahmoud Hussein", "Engy Nabil Mahmoud Fahmy Mohamed", "Essam Mahmoud Zafar Abdel Rahim Zafar", "Hatem Ahmed Basyouny Omar", "Shaimaa Ahmed Reyad Amin", "Sayed Mohamed Sayed Ahmed Mohamed",  
+"Ashraf Hassanain Taha Salem", "Ehab Ramadan Abdel Khalek Shoeb", "Ahmed Mohamed El Saeed Abdel Fattah Ghonaim El Mahallawy", "Mohamed Mahmoud Ramadan Ahmed El Wakeel", "Mahmoud Hassan Ahmed Mohamed", "Abdel Rahman Mohamed Khalifa Hassanain Khamis", "Milad Eshak Shehata Assad", "Mohamed Abdel Gawwad Abdel Salam Abdel Gawwad",  
+"Amr Mohamed Mahmoud Afifi", "Mahmoud Gamil El Shahat Shehata", "Omnia Adel Mohamed Abdel Maguid", "Ahmed Medhat Fadel Abdallah Fadl", "Sherif El Sayed Mahmoud El Sayed El Shahed", "Hassan Mohamed Hassan Abou Shamar", "El Sayed Ibrahim Mohamed Ibrahim Nashy", "Abdel Rahman Omar Salah El Din Daif",  
+"Girgis Farag Selwans Atallah", "Ahmed Helmy Kourany Kotb", "Mohamed Khaled Ali Mousa Allam", "Ahmed Saad Abdel Aziz Mohamed Zidan", "Hossam Sharaf Hamed Moustafa", "Karam Essam Mohamed El Sayed", "Ahmed El Sayed Abdel Razek Soliman", "Ibrahim Ragab Younes El Sayed",  
+"Yasser Mohamed Fouad El Sayed Ali Arab", "Ahmed Ibrahim Mohamed Ibrahim", "Ramy Reda Khalil Mohamed Ibrahim", "Hussein Hosny Sayed Afifi", "Engy Abdel Maseeh Aziz Zaky", "Mohamed Ashraf Farhan Mohamed", "Ali Reda Ali Mohamed Abdel Aziz", "Sabry Saad Mohamed Abdel Momen",  
+"Mohamed Reda Abdel Salam Abdel Rahman", "Saleh Madbouly Mahmoud Rezk Shaker", "Sayed Rabee Sayed Mohamed", "Ahmed Adel Ahmed Hemaida", "Anwar Salah Ali Shehata Batteekh", "Mohamed Abdallah Metwally Ibrahim", "Yasmine Abdel Tawab Abdallah Mohamed Badawy", "Moustafa Mahmoud Mohamed Abdel Maksoud",  
+"Mohamed Hamed Ahmed Mohamed", "Mohamed Saeed Shaban Mohamed Ibrahim", "Morsy Sayed Morsy Sadek", "Zeyad Emad Eid Abdel Wahed Gamil", "Hossam Hassan Mohamed Hassan", "Waleed Khaled Ali Ibrahim", "Ahmed Moustafa Abdel Rahim Gad", "Ali Gamal Ismaeel Mohamed Moustafa",  
+"Emil Athanasious Emil Meleek", "Ehab Saad Mohamed Zaghloul Nasr", "Abdel Hady Mokhtar Abdel Salam Moawad", "Amr Abdel Rahman Yakoub Ayesh", "Wael Mohamed Sayed Mohamed", "Moustafa Mohamed Yousef Bekheet", "Mohamed El Sayyad Abdel Moniem Hamad El Kilany", "Islam Ibrahim Mortada Hassan",  
+"Ahmed Gamal Fouad Abdel Samad", "Emad Abdallah Hussein Ahmed", "Moustafa Abdel Naby Abdel Azim Hassan", "Ahmed Abdallah Mohamed Moustafa El Garbooa", "Mohamed Magdy Hosny Fathy", "Mohamed Nasser Gamaa Mahmoud", "Sayed Salah Sayed Ahmed", "Belal Omara Mohamed Hemaida",  
+"Ahmed Zain El Abdeen Ali Abdallah", "Maged Abdel Halim Mohamed Awwad", "Mahmoud Hassan Ibrahim Yousef", "Hossam Alaa Hanafy Ahmed", "Belal Azzam Sedik Hassan", "Kareem Abdel Baset Ali Taee", "Mohamed Saeed Mohamed Ali", "Mohamed Ali Abdel Rady Omar",  
+"Moustafa Shahat Mohamed Saad", "Adham Sayed Aboul Azm Abdel Hamid", "Hagar Mahfouz Ali Gouda", "Ramadan Tarek Ramadan Abbas", "Ragab Owais Eid Abdel Wahab", "Mohamed Hassan Mohamed Gad El Rab", "Hany Essa Awad Mekhaeel", "Ahmed Mahmoud Abbas Bekheet",  
+"Hazem Hamdy Mohamed Morsy", "Hamed Ali Hamed Ali El Sayed", "Farag Sayed Abdallah Abou Seree", "Mohamed Ramadan Hassan Ali Abdel Maguid", "Abdallah Mohamed Farahat Yousef Abdallah", "Mahmoud Ahmed Mahmoud Mohamed", "Ahmed Nasser Abdel Aziz Abdel Naby", "Mahmoud Saeed Mahmoud Ahmed",  
+"Mohamed Ibrahim Mahmoud Ismaeel Amer", "Waleed Mahmoud Mohamed Abou Bakr", "Hamada Saeed Metwally Abou Bakr", "Maha Mohamed Mahrous Hassan", "Ahmed Eid Mohamed Moustafa Khalil", "Aya Bekheet Abdel Sayed Bekheet", "Khaled Saeed Kamal Fouad Mohamed El Mahallawy", "Joseph Magdy Shafik El Sayed",  
+"Osama Mamdouh Saber Abdel Moteleb", "Ibrahim Ahmed Ibrahim Hareedy", "Reem Ahmed Kamal Ahmed Abdel Aal Selim", "Alaa Samy Abdel Maogoud Ali Hamad", "Moustafa Abdel Halim Ahmed Abdel Wahab", "Mohamed Shamandy Abdel Kader Shamandy", "Ahmed Tarek Mohamed Ahmed", "Hatem Mohamed Ragab Mohamed",  
+"Ahmed Fathy Ibrahim Ahmed", "Moataz Moustafa Salem Ali Ali", "Moustafa Fathy Ali Mohamed", "Mina Fayek Shaker Farag", "Ahmed Essam Abdel Maksoud Qayaty", "Eman Sayed Abdel Wahab Ali", "Magdy Fayez Awad Ramadan Naeem", "Ahmed Antar Mohamed Antar El Hawwary",  
+"Eriny Niazy Sobhy Tadros", "Abdel Hamid Gamal Abdel Hamid Abdel Azim Mahmoud", "Mohamed Eid Abdel Wahed Ibrahim", "Ahmed Essam Mohamed Abdel Fattah Ibrahim", "Naeem Hamada Naeem Mohamed El Ahdal", "Mahmoud Fawzy Zaky Hafez", "Ashraf El Kady Abdel Aal Ali", "Gamal Abdel Fattah Mohamed Mohamed Salem",  
+"Saad Moustafa Sultan Ahmed", "Mahmoud Ahmed Mourad Abdallah", "Mohamed Atef El Sayed Kotb El Zaydy", "Hossam Salama El Sayed Mohamed Abdel Maksoud", "Islam Mohamed Farouk Mohamed Mohamed", "Ashraf Farouk Sayed Ali", "Alyaa Saber Ibrahim Ibrahim", "Ashraf Salah Abdel Kader Mohamed"  
+
 ];
 const prizes = [
   "Mobile - Apple 15", "Speaker - JBL", "Apple AirPods (3rd Generation), Wireless", "TV Sharp 32", "Kitchen Machine - Moulinex", "Vacuum Cleaner - Hoover",
@@ -241,7 +231,7 @@ export default function DrawSimulator() {
             color: white;
             padding: 1rem 2rem;
             border: none;
-            border-radius: 8px;
+            border-radius: 100px;
             font-size: 1.25rem;
             cursor: pointer;
             transition: background-color 0.3s ease;
@@ -281,7 +271,7 @@ export default function DrawSimulator() {
           </div>
         </div>
       </div>
-      <button className="draw-button" onClick={handleDraw}>Start Draw</button>
+      <button className="draw-button" onClick={handleDraw}>Draw</button>
     </div>
   );
 }
