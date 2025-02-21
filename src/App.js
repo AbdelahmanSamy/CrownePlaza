@@ -1,19 +1,56 @@
 import { useState, useEffect } from "react";
+import {Howl} from 'howler';
 
 const names = [
-  "Wagih Khalifa Abdel Aal", "Souad Mohamed Mohamed", "Hany Abdallah Mahmoud", "Engy Nabil Mahmoud", "Ramy Fawzy Mohamed", "Essam Mahmoud Zafar", "Hatem Ahmed Basyouny", "Shaimaa Ahmed Reyad", "Sayed Mohamed Sayed", "Ashraf Hassanain Taha", "Ehab Ramadan Abdel", "Ahmed Mohamed El Saeed", "Mohamed Mahmoud Ramadan", "Mahmoud Hassan Ahmed", "Abdel Rahman Mohamed", "Milad Eshak Shehata", "Mohamed Abdel Gawwad Abdel Salam", "Amr Mohamed Mahmoud", "Mahmoud Gamil El Shahat", "Omnia Adel Mohamed", "Ahmed Medhat Fadel", "Sherif El Sayed Mahmoud", "Hassan Mohamed Hassan", "El Sayed Ibrahim Mohamed", "Abdel Rahman Omar Salah", "Girgis Farag Selwans", "Ahmed Helmy Kourany", "Mohamed Khaled Ali", "Ahmed Saad Abdel Aziz", "Hossam Sharaf Hamed", "Karam Essam Mohamed", "Ahmed El Sayed Abdel Razek", "Ibrahim Ragab Younes", "Yasser Mohamed Fouad", "Ahmed Ibrahim Mohamed", "Ramy Reda Khalil", "Hussein Hosny Sayed", "Engy Abdel Maseeh Aziz", "Mohamed Ashraf Farhan", "Ali Reda Ali", "Sabry Saad Mohamed", "Mohamed Reda Abdel Salam", "Saleh Madbouly Mahmoud", "Sayed Rabee Sayed", "Ahmed Adel Ahmed", "Anwar Salah Ali", "Mohamed Abdallah Metwally", "Yasmine Abdel Tawab Abdallah", "Moustafa Mahmoud Mohamed", "Mohamed Hamed Ahmed", "Mohamed Saeed Shaban", "Abdel Rahman Sayed Abdel Rahman", "Morsy Sayed Morsy", "Zeyad Emad Eid", "Hossam Hassan Mohamed", "Waleed Khaled Ali", "Ahmed Moustafa Abdel", "Ali Gamal Ismaeel", "Emil Athanasious Emil", "Ehab Saad Mohamed", "Abdel Hady Mokhtar Abdel Salam", "Amr Abdel Rahman Yakoub", "Wael Mohamed Sayed", "Moustafa Mohamed Yousef", "Mohamed El Sayyad Abdel Moniem", "Islam Ibrahim Mortada", "Mahmoud Samir Abdel Rahim", "Ahmed Gamal Fouad", "Emad Abdallah Hussein", "Moustafa Abdel Naby Abdel Azim", "Ahmed Abdallah Mohamed", "Mohamed Magdy Hosny", "Mohamed Nasser Gamaa", "Sayed Salah Sayed", "Belal Omara Mohamed", "Ahmed Zain El Abdeen Ali", "Maged Abdel Halim Mohamed", "Mahmoud Hassan Ibrahim", "Hossam Alaa Hanafy", "Belal Azzam Sedik", "Kareem Abdel Baset Ali", "Mohamed Saeed Mohamed", "Mohamed Atef Mohamed", "Mohamed Ali Abdel Rady", "Moustafa Shahat Mohamed", "Adham Sayed Aboul Azm", "Hagar Mahfouz Ali", "Ramadan Tarek Ramadan", "Ragab Owais Eid", "Mohamed Hassan Mohamed", "Hany Essa Awad", "Ahmed Mahmoud Abbas", "Hazem Hamdy Mohamed", "Hamed Ali Hamed", "Farag Sayed Abdallah", "Mohamed Ramadan Hassan", "Abdallah Mohamed Farahat", "Mahmoud Ahmed Mahmoud", "Ahmed Nasser Abdel Aziz", "Mahmoud Saeed Mahmoud", "Mohamed Ibrahim Mahmoud", "Waleed Mahmoud Mohamed", "Hamada Saeed Metwally", "Maha Mohamed Mahrous", "Ahmed Eid Mohamed", "Aya Bekheet Abdel", "Khaled Saeed Kamal", "Joseph Magdy Shafik", "Osama Mamdouh Saber", "Ibrahim Ahmed Ibrahim", "Reem Ahmed Kamal", "Alaa Samy Abdel", "Moustafa Abdel Halim", "Mohamed Shamandy Abdel Kader", "Ahmed Tarek Mohamed", "Hatem Mohamed Ragab", "Ahmed Fathy Ibrahim", "Moataz Moustafa Salem", "Moustafa Fathy Ali", "Kareem Ahmed Nassary", "Mina Fayek Shaker", "Ahmed Essam Abdel Maksoud", "Eman Sayed Abdel Wahab", "Magdy Fayez Awad", "Ahmed Antar Mohamed", "Eriny Niazy Sobhy", "Abdel Hamid Gamal Abdel Hamid", "Mohamed Eid Abdel Wahed", "Ahmed Essam Mohamed", "Naeem Hamada Naeem", "Mahmoud Fawzy Zaky", "Ashraf El Kady Abdel Aal", "Gamal Abdel Fattah Mohamed", "Saad Moustafa Sultan", "Mahmoud Ahmed Mourad", "Mohamed Atef El Sayed", "Hossam Salama El Sayed", "Islam Mohamed Farouk", "Bahgat Basha Adel", "Ashraf Farouk Sayed", "Alyaa Saber Ibrahim", "Ashraf Salah Abdel Kader", "Mohamed Mohamed Abdel Tawab", "Mohamed Amr Kamal", "Mohamed Kamal Kamal", "Abdel Rahman Ashraf Ahmed", "Atef Eid Mahmoud", "Islam Mohamed Saeed", "Fady Maged Michaeel", "Bishoy Milad Kamel", "Sally Abdel Aal Mohamed", "Radwan Gamal Radwan", "Momen Magdy Ahmed", "Taha Basem Taha", "Ahmed Madbouly Ibrahim", "Shawky Farid Shawky", "Waleed Saeed Ali", "Ahmed Salah ElAbd Elewa", "Yasmine Saad Ibrahim", "Mohamed Reda Abdel Moez", "Ahmed Saber Hanafy", "Zeyad Wael El Husseiny", "Mohamed Ahmed Othman", "Mohamed Gouda Mohamed", "Mahmoud Nabhan Awwad", "Mahmoud Garhy Abdel Rahman", "Hassan Mohamed Hassan", "Abdel Fattah Omar Abdel Fattah"
+  "Hisham Nabil Hussein Abdel Hamid", "Nassar Othman Nassar Mousa", "Shady Samir Moustafa Mohamed", "Ahmed Ashraf Salah El Din Hafez El Segainy", "Hend Diaa Diaa Saif El Din Khalifa", "Wagih Khalifa Abdel Aal Ahmed",  
+"Souad Mohamed Mohamed Abdel Salam Mohamed Metwally", "Hany Abdallah Mahmoud Hussein", "Essam Moustafa Saad El Din Abdel Rahman Afifi", "Engy Nabil Mahmoud Fahmy Mohamed", "Essam Mahmoud Zafar Abdel Rahim Zafar", "Hassan Yousef Hassan Saleh",  
+"Hatem Ahmed Basyouny Omar", "Reem Ibrahim Abdel Rahman Mohamed Daif", "Shaimaa Ahmed Reyad Amin", "Sayed Mohamed Sayed Ahmed Mohamed", "Ashraf Hassanain Taha Salem", "Ehab Ramadan Abdel Khalek Shoeb",  
+"Ahmed Mohamed El Saeed Abdel Fattah Ghonaim El Mahallawy", "Mohamed Mahmoud Ramadan Ahmed El Wakeel", "Mahmoud Hassan Ahmed Mohamed", "Abdel Rahman Mohamed Khalifa Hassanain Khamis", "Milad Eshak Shehata Assad", "Mohamed Abdel Gawwad Abdel Salam Abdel Gawwad",  
+"Amr Mohamed Mahmoud Afifi", "Mahmoud Gamil El Shahat Shehata", "Omnia Adel Mohamed Abdel Maguid", "Ahmed Medhat Fadel Abdallah Fadl", "Sherif El Sayed Mahmoud El Sayed El Shahed", "Hassan Mohamed Hassan Abou Shamar",  
+"El Sayed Ibrahim Mohamed Ibrahim Nashy", "Abdel Rahman Omar Salah El Din Daif", "Girgis Farag Selwans Atallah", "Ahmed Helmy Kourany Kotb", "Mohamed Khaled Ali Mousa Allam", "Ahmed Saad Abdel Aziz Mohamed Zidan",  
+"Hossam Sharaf Hamed Moustafa", "Karam Essam Mohamed El Sayed", "Ahmed El Sayed Abdel Razek Soliman", "Ibrahim Ragab Younes El Sayed", "Yasser Mohamed Fouad El Sayed Ali Arab", "Ahmed Ibrahim Mohamed Ibrahim",  
+"Ramy Reda Khalil Mohamed Ibrahim", "Hussein Hosny Sayed Afifi", "Engy Abdel Maseeh Aziz Zaky", "Mohamed Ashraf Farhan Mohamed", "Ali Reda Ali Mohamed Abdel Aziz", "Sabry Saad Mohamed Abdel Momen",  
+"Mohamed Reda Abdel Salam Abdel Rahman", "Saleh Madbouly Mahmoud Rezk Shaker", "Sayed Rabee Sayed Mohamed", "Ahmed Adel Ahmed Hemaida", "Anwar Salah Ali Shehata Batteekh", "Mohamed Abdallah Metwally Ibrahim",  
+"Yasmine Abdel Tawab Abdallah Mohamed Badawy", "Moustafa Mahmoud Mohamed Abdel Maksoud", "Mohamed Hamed Ahmed Mohamed", "Mohamed Saeed Shaban Mohamed Ibrahim", "Morsy Sayed Morsy Sadek", "Zeyad Emad Eid Abdel Wahed Gamil",  
+"Hossam Hassan Mohamed Hassan", "Waleed Khaled Ali Ibrahim", "Ahmed Moustafa Abdel Rahim Gad", "Ali Gamal Ismaeel Mohamed Moustafa", "Emil Athanasious Emil Meleek", "Samy El Sayed Ali Ismail",  
+"Ehab Saad Mohamed Zaghloul Nasr", "Abdel Hady Mokhtar Abdel Salam Moawad", "Amr Abdel Rahman Yakoub Ayesh", "Wael Mohamed Sayed Mohamed", "Moustafa Mohamed Yousef Bekheet", "Mohamed El Sayyad Abdel Moniem Hamad El Kilany",  
+"Islam Ibrahim Mortada Hassan", "Ahmed Gamal Fouad Abdel Samad", "Emad Abdallah Hussein Ahmed", "George Onsy Philips", "Moustafa Abdel Naby Abdel Azim Hassan", "Ahmed Abdallah Mohamed Moustafa El Garbooa",  
+"Abdel Khalek Ali Abdel Khalek Saad", "Mohamed Magdy Hosny Fathy", "Mohamed Nasser Gamaa Mahmoud", "Sayed Salah Sayed Ahmed", "Belal Omara Mohamed Hemaida", "Ahmed Zain El Abdeen Ali Abdallah",  
+"Maged Abdel Halim Mohamed Awwad", "Mahmoud Hassan Ibrahim Yousef", "Hossam Alaa Hanafy Ahmed", "Belal Azzam Sedik Hassan", "Kareem Abdel Baset Ali Taee", "Mohamed Saeed Mohamed Ali",  
+"Mohamed Ali Abdel Rady Omar", "Moustafa Shahat Mohamed Saad", "Adham Sayed Aboul Azm Abdel Hamid", "Hagar Mahfouz Ali Gouda", "Ramadan Tarek Ramadan Abbas", "Ragab Owais Eid Abdel Wahab",  
+"Mohamed Hassan Mohamed Gad El Rab", "Hany Essa Awad Mekhaeel", "Wael Ramadan Ahmed Hemdan", "Mohamed Salem Ali El Esawy", "Ahmed Mahmoud Abbas Bekheet", "Hazem Hamdy Mohamed Morsy",  
+"Hamed Ali Hamed Ali El Sayed", "Farag Sayed Abdallah Abou Seree", "Mohamed Ramadan Hassan Ali Abdel Maguid", "Abdallah Mohamed Farahat Yousef Abdallah", "Mahmoud Ahmed Mahmoud Mohamed", "Ahmed Nasser Abdel Aziz Abdel Naby",  
+"Mahmoud Saeed Mahmoud Ahmed", "Mohamed Ibrahim Mahmoud Ismaeel Amer", "Waleed Mahmoud Mohamed Abou Bakr", "Hamada Saeed Metwally Abou Bakr", "Maha Mohamed Mahrous Hassan", "Ahmed Eid Mohamed Moustafa Khalil",  
+"Aya Bekheet Abdel Sayed Bekheet", "Khaled Saeed Kamal Fouad Mohamed El Mahallawy", "Joseph Magdy Shafik El Sayed", "Osama Mamdouh Saber Abdel Moteleb", "Ibrahim Ahmed Ibrahim Hareedy", "Reem Ahmed Kamal Ahmed Abdel Aal Selim",  
+"Alaa Samy Abdel Maogoud Ali Hamad", "Moustafa Abdel Halim Ahmed Abdel Wahab", "Mohamed Shamandy Abdel Kader Shamandy", "Ahmed Tarek Mohamed Ahmed", "Hatem Mohamed Ragab Mohamed", "Ahmed Fathy Ibrahim Ahmed",  
+"Moataz Moustafa Salem Ali Ali", "Moustafa Fathy Ali Mohamed", "Mina Fayek Shaker Farag", "Ahmed Essam Abdel Maksoud Qayaty", "Eman Sayed Abdel Wahab Ali", "Magdy Fayez Awad Ramadan Naeem",  
+"Ahmed Antar Mohamed Antar El Hawwary", "Eriny Niazy Sobhy Tadros", "Abdel Hamid Gamal Abdel Hamid Abdel Azim Mahmoud", "Mohamed Eid Abdel Wahed Ibrahim", "Ahmed Essam Mohamed Abdel Fattah Ibrahim", "Naeem Hamada Naeem Mohamed El Ahdal",  
+"Mahmoud Fawzy Zaky Hafez", "Ashraf El Kady Abdel Aal Ali", "Gamal Abdel Fattah Mohamed Mohamed Salem", "Saad Moustafa Sultan Ahmed", "Mahmoud Ahmed Mourad Abdallah", "Mohamed Atef El Sayed Kotb El Zaydy",  
+"Hossam Salama El Sayed Mohamed Abdel Maksoud", "Islam Mohamed Farouk Mohamed Mohamed", "Ashraf Farouk Sayed Ali", "Alyaa Saber Ibrahim Ibrahim", "Ashraf Salah Abdel Kader Mohamed", "Mohamed Mohamed Abdel Tawab Emam",  
+"Mohamed Amr Kamal Ali Hammam", "Mohamed Kamal Kamal Salem Shalaby", "Abdel Rahman Ashraf Ahmed Mahran", "Atef Eid Mahmoud Hamad", "Islam Mohamed Saeed Abdel Aziz Darwish", "Fady Maged Michaeel Aziz",  
+"Bishoy Milad Kamel Awadallah Farag", "Sally Abdel Aal Mohamed Reyad", "Shams Ibrahim Hamed Hussein", "Eman Salah Abdel Hay Sowailam", "Radwan Gamal Radwan Ahmed", "Momen Magdy Ahmed Gomaa",  
+"Taha Basem Taha El Kady", "Ahmed Madbouly Ibrahim Madbouly"  
 ];
 const prizes = [
-  "Mobile -Apple 15",
-  "Speaker - JBL",
-  "Apple AirPods (3rd Generation), Wireless", "TV Sharp 32",
-  "Kitchen Machine-Moulinex-1000W","Vacuum Cleaner-Hoover- 2000w","Smart Watch -Redmi","Air fryer -Torneedo-3.5 lit","Smart Watch -Huawei","Turkish Coffee Machine -Mienta","Toaster -Sonai","Iron-Philips","Speaker - JBL","Laptop -Del Core i7", "TV LG -43", "Mobile -Samsung Galaxy A55", "Mobile -Vivo Y19s Black", "Microwave -Fresh-28lit", "Vacuum Cleaner-Hoover- 2000w", 
-  "Smart Watch -Redmi", "Air fryer -Torneedo-3.5 lit", "Turkish Coffee Machine -Mienta", "Toaster -Sonai", 
-  "Sandwich maker -One Life-waffel, grill-1*3/800w", "Iron-Philips", "Mobile -Vivo Y19s Black",
-  "Smart Watch -Apple", "Samsung Galaxy TABA9", "Microwave -Sharp-34lit", "TV Sharp 32", "Microwave -Fresh-28lit", "Vacuum Cleaner-Hoover- 2000w", "Vacuum Cleaner -Fresh-1900 w", "Air fryer -Torneedo-3.5 lit", "Smart Watch -Huawei", "Turkish Coffee Machine -Mienta", "Sandwich maker -One Life-waffel, grill-1*3/800w",
-  "Iron-Philips", "Vacuum Cleaner -Fresh-1900 w",
+  "Mobile - Apple 15", "Speaker - JBL", "Apple AirPods (3rd Generation), Wireless", "TV Sharp 32", "Kitchen Machine - Moulinex", "Vacuum Cleaner - Hoover",
+"Smart Watch - Redmi", "Air Fryer - Tornedo - 4 lit", "Smart Watch - Huawei", "Turkish Coffee Machine - Mienta", "Kitchen Blender - Mienta (offer)", "Iron - Philips",
+"Speaker - JBL", "Laptop - Del Core i7", "Smart TV LG - 43", "Mobile - Samsung Galaxy A35", "Mobile - Vivo Y19s Black", "Microwave - Fresh",
+"Vacuum Cleaner - Hoover", "Smart Watch - Redmi", "Air Fryer - Tornedo - 4 lit", "Turkish Coffee Machine - Mienta", "Kitchen Blender - Mienta (offer)", "Sandwich Maker - One Life - Waffle, Grill - 1*3/800W",
+"Iron - Philips", "Mobile - Vivo Y19s Black", "Smart Watch - Apple", "Samsung Galaxy TABA9 / Ram: 4GB / M: 64GB", "Microwave - Sharp", "TV Sharp 32",
+"Microwave - Fresh", "Vacuum Cleaner - Hoover", "Vacuum Cleaner - Fresh", "Air Fryer - Tornedo - 4 lit", "Smart Watch - Huawei", "Turkish Coffee Machine - Mienta",
+"Sandwich Maker - One Life - Waffle, Grill - 1*3/800W", "Iron - Philips", "Vacuum Cleaner - Fresh"
 
 ];
+const clickSound = new Howl({
+  src: ["click.mp3"], // Path to your click sound file
+  volume: 0.5,
+});
+
+const shuffleSound = new Howl({
+  src: ["shuffle.mp3"], // Path to your shuffle sound file
+  volume: 0.5,
+  loop: true, // Loop the shuffle sound during shuffling
+});
 
 export default function DrawSimulator() {
   const [remainingNames, setRemainingNames] = useState(names);
@@ -22,20 +59,23 @@ export default function DrawSimulator() {
   const [drawnPrize, setDrawnPrize] = useState(null);
   const [isSwitchingColors, setIsSwitchingColors] = useState(false);
   const [isShuffling, setIsShuffling] = useState(false);
+  const [step, setStep] = useState(0); // 0: idle, 1: shuffle prize, 2: shuffle name
 
   const shuffleEffect = (items, setDrawn, callback) => {
     let shuffleCount = 0;
     setIsShuffling(true);
+    shuffleSound.play(); // Play shuffle sound
 
     const shuffleInterval = setInterval(() => {
       const shuffledItems = [...items].sort(() => 0.5 - Math.random()).slice(0, 4);
       setDrawn(shuffledItems[Math.floor(Math.random() * shuffledItems.length)]);
       shuffleCount++;
-      if (shuffleCount > 15) { // After 10 shuffles (1 second each), stop the shuffle
+      if (shuffleCount > 15) {
         clearInterval(shuffleInterval);
+        shuffleSound.stop(); // Stop shuffle sound
         callback();
       }
-    }, 70); // Shorter interval for faster shuffle
+    }, 70);
   };
 
   const drawRandom = (items, setItems, setDrawn) => {
@@ -49,29 +89,31 @@ export default function DrawSimulator() {
   };
 
   const handleDraw = () => {
-    if (remainingNames.length === 0 || remainingPrizes.length === 0) return;
+    clickSound.play(); // Play click sound on space bar press
 
-    setIsSwitchingColors(true);
-
-    setTimeout(() => {
+    if (step === 0) {
+      // Start by shuffling prizes
+      setIsSwitchingColors(true);
+      setStep(1);
+      drawRandom(remainingPrizes, setRemainingPrizes, setDrawnPrize);
+    } else if (step === 1) {
+      // After prizes are shuffled, shuffle names
+      setIsSwitchingColors(true);
+      setStep(2);
       drawRandom(remainingNames, setRemainingNames, setDrawnName);
-      setTimeout(() => {
-        drawRandom(remainingPrizes, setRemainingPrizes, setDrawnPrize);
-        setIsSwitchingColors(false);
-        // After 3 seconds, show "Who's next"
-        setTimeout(() => {
-          setDrawnName("Who's next");
-          setDrawnPrize("Mmmmm 🤔");
-        }, 10000); // Show "Who's next" after 3 seconds
-      }, 1000); // Wait 3 seconds before drawing the prize
-    }, 1000); // Wait 1 second before starting the draw
+    } else if (step === 2) {
+      // Reset for the next draw
+      setDrawnName("Who's next");
+      setDrawnPrize("Mmmmm 🤔");
+      setStep(0);
+    }
   };
 
   useEffect(() => {
     if (remainingPrizes.length === 0) {
       setTimeout(() => {
         alert('🎉 Congrats for all the winners 🎉');
-      }, 500); // Delay the alert until the last prize is drawn
+      }, 500);
     }
   }, [remainingPrizes]);
 
@@ -88,7 +130,7 @@ export default function DrawSimulator() {
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
-  }, [remainingNames, remainingPrizes]);
+  }, [step, remainingNames, remainingPrizes]);
 
   return (
     <div className="draw-simulator">
@@ -232,13 +274,11 @@ export default function DrawSimulator() {
           <div className={`draw-circle name-circle ${isSwitchingColors ? 'switching' : ''}`}>
             {drawnName ? drawnName : "Draw Name"}
           </div>
-          
         </div>
         <div className="draw-section">
           <div className={`draw-circle prize-circle ${isSwitchingColors ? 'switching' : ''}`}>
             {drawnPrize ? drawnPrize : "Draw Prize"}
           </div>
-          
         </div>
       </div>
       <button className="draw-button" onClick={handleDraw}>Start Draw</button>
